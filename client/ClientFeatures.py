@@ -2,7 +2,7 @@ from socket import AF_INET, socket, SOCK_STREAM
 import pickle
 import json
 import Constants
-
+import os.path
 
 class ClientFeatures:
     #client socket
@@ -10,6 +10,10 @@ class ClientFeatures:
     @classmethod
     def revMenu(cls):
         try:
+            # check if folder images exist, if not then create folder
+            if not os.path.isdir("Resources/dish_images_received"):
+                os.mkdir("Resources/dish_images_received")
+
             cls.client.sendall(bytes("Menu", Constants.FORMAT))
             #Get length of data received from server
             length = cls.client.recv(1024).decode(Constants.FORMAT)

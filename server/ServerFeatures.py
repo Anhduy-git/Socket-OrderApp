@@ -166,12 +166,15 @@ class ServerFeatures:
                 #if client order more, then they have to pay more, so update status to false again
                 data["orders"][size - 1]["status"] = False
 
+                #check if folder order database exist, if not then create folder
+                if not os.path.isdir("OrderDatabase"):
+                    os.mkdir("OrderDatabase")
+
                 # store data to file json
                 with open("OrderDatabase/" + tableNumber + ".json", "w") as f:
                     json.dump(data, f, indent=2)
 
             else:
-
                 # get time
                 dt = datetime.now()
                 currentTime = dt.strftime('%Y-%m-%d %H:%M:%S')
@@ -187,11 +190,14 @@ class ServerFeatures:
                 for i in range(numDishChoosed):
                     dish = dict(name=lstDishChoosed[i], price=cls.getPrice(lstDishChoosed[i]), quantity=lstQuantity[i])
                     data["orders"][size]["dishes"].append(dish)
+
+                # check if folder order database exist, if not then create folder
+                if not os.path.isdir("OrderDatabase"):
+                    os.mkdir("OrderDatabase")
+
                 # store data to file json
                 with open("OrderDatabase/" + tableNumber + ".json", "w") as f:
                     json.dump(data, f, indent=2)
-
-
 
 
 
