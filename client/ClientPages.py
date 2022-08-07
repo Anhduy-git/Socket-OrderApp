@@ -292,9 +292,10 @@ class PaymentPage:
         self.txtTest = None
         self.txtChoosedList = None
         self.lstChoosed = None
-        self.methodPayment = None
+        self.methodPayment = "CASH"
         self.txtPrice = None
         self.txtPriceToPay = None
+        self.var = None
 
     def onRadioBtnClick(self):
         option = self.var.get()
@@ -368,7 +369,7 @@ class PaymentPage:
         self.txtPaymentMethod.place(relx=0.5, rely=0.3)
 
         # payment method
-        self.var = tk.IntVar()
+        self.var = tk.IntVar(value=1)
         self.R1 = tk.Radiobutton(self.root, text="Cash payment", variable=self.var, value=1,
                                  font=(Constants.mainFont, 16),
                                  command=self.onRadioBtnClick)

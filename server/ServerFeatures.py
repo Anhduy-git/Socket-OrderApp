@@ -265,7 +265,7 @@ class ServerFeatures:
     def readRequest(cls, client):
         request = ""
         try:
-            request = client.recv(1024).decode('utf-8')
+            request = client.recv(1024).decode(cls.FORMAT)
         finally:
             return request
 
@@ -274,7 +274,7 @@ class ServerFeatures:
     def takeRequest(cls, client):
         while True:
             Request = cls.readRequest(client)
-            if not Request or Request is None:
+            if Request is None or Request == "":
                 client.close()
                 break
             print("Request from client: ", Request)
@@ -289,7 +289,7 @@ class ServerFeatures:
     def Serveur(cls):
         try:
             cls.SERVER.listen()
-            ACCEPT_THREAD = Thread(target=cls.waitingConnection())
+            ACCEPT_THREAD = Thread(target=cls.waitingConnection)
             ACCEPT_THREAD.start()
             ACCEPT_THREAD.join()
         except:
@@ -306,7 +306,7 @@ class ServerFeatures:
         while True:
             client, Address = cls.SERVER.accept()
             print("Client ", Address, " connected!")
-            Thread(target=cls.takeRequest(client)).start()
+            Thread(target=cls.takeRequest, args=(client,)).start()
     @classmethod
     def startServer(cls):
         print("Server IP Address Now ", (socket.gethostbyname(socket.gethostname())))
